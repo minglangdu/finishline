@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router } from "expo-router";
 import { Button, Text, View } from "react-native";
 
 export default function Index() {
@@ -8,8 +8,8 @@ export default function Index() {
         flex: 1,
       }}
     >
-      <Text>AAA</Text>
-      <Button title="A" onPress={() => router.push('/(tabs)/example')} />
+      <Text>Sample</Text>
+      <Button title="B" onPress={() => router.back()} />
     </View>
   );
 }
