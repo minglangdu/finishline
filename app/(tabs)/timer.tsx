@@ -2,6 +2,12 @@ import { router } from "expo-router";
 import { Button, Text, View } from "react-native";
 
 export default function Index() {
+  const begin = () => {
+    router.navigate({
+      pathname: "/start",
+      params: { type: "timer" }
+    });
+  };
   return (
     <View
       style={{
@@ -9,7 +15,8 @@ export default function Index() {
       }}
     >
       <Text>Example</Text>
-      <Button title="B" onPress={() => router.back()} />
+      <Button title="Start" onPress={begin} />
+      <Button title="Home" onPress={() => router.replace("/")} />
     </View>
   );
 }
