@@ -5,18 +5,18 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen 
-        name="sample"
+        name="focus"
         options={{
-          title: 'Sample',
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="flash" size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen 
-      name="example" 
+      name="timer" 
       options={{
-        title: 'Example',
+        headerShown: false,
         tabBarIcon: ({ color, size }) => (
           <Ionicons name="alert-circle-outline" size={size} color={color} />
         ),

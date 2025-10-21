@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useState } from "react";
-import { Button, TextInput, View } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
 
 export default function Timer() {
   const [id, setId] = useState("Unnamed Task");
@@ -19,6 +19,7 @@ export default function Timer() {
         padding: 16
       }}
     >
+      <Text style={{ fontWeight:"bold" }}>Enter task name below</Text>
       <TextInput
         placeholder="Task Name"
         value={id}
@@ -26,7 +27,12 @@ export default function Timer() {
           setId(text);
           if (id == '') setId("Unnamed Task")
         }}
+        style={{
+          borderWidth: 1,
+          borderRadius: 3
+        }}
       />
+      <br />
       <Button title="Start" onPress={begin} />
       <br />
       <Button title="Home" onPress={() => router.replace("/")} />

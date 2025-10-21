@@ -63,9 +63,6 @@ export default function Index() {
         flex: 1,
         padding: 16
       }}>
-        <Text>
-          aaa
-        </Text>
         <Button onPress={() => router.push("/(tabs)/timer")} title='Timer' />
         <br />
         <Button onPress={() => router.push("/(tabs)/focus")} title='Focus' />
