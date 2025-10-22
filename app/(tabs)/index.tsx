@@ -63,12 +63,17 @@ export default function Index() {
         flex: 1,
         padding: 16
       }}>
-        <Title>Times</Title>
+        <Title>Finish Line</Title>
+        <Text>Some text about the app here</Text>
+        <br />
+        <Title>Times</Title> <br />
+        <Text style={{fontWeight:"bold", fontSize:20}}>Sprint</Text>
         <ul>
           {Array.from(Object.entries(times)).map(([key, value]: [string, any]) => {
-            return <li key={key}> {key}: {value}</li>
+            return <li key={key} style={{fontFamily: "sans-serif"}}> <strong>{key}</strong>: {value}</li>
           })}
         </ul>
+        <Text style={{fontWeight:"bold", fontSize:20}}>Hike</Text>
       </View>
     );
   }
