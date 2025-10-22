@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, TouchableOpacity, View } from "react-native";
 import { AutocompleteInput } from "react-native-autocomplete-input";
+import { Title } from "../custom";
 
 interface Task {
   title: string
@@ -33,6 +34,7 @@ export default function Focus() {
         padding: 16
       }}
     >
+      <Title>Hike Mode</Title> <br />
       <Text style={{ fontWeight: "bold" }}>Enter task name below</Text>
       
       <AutocompleteInput

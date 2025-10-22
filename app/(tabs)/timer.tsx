@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import { Button, Text, TextInput, View } from "react-native";
+import { Title } from "../custom";
 
 export default function Timer() {
   const [id, setId] = useState("Unnamed Task");
@@ -19,13 +20,13 @@ export default function Timer() {
         padding: 16
       }}
     >
+      <Title>Sprint Mode</Title><br />
       <Text style={{ fontWeight:"bold" }}>Enter task name below</Text>
       <TextInput
         placeholder="Task Name"
         value={id}
         onChangeText={text => {
           setId(text);
-          if (id == '') setId("Unnamed Task")
         }}
         style={{
           borderWidth: 1,

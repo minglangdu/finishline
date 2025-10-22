@@ -1,8 +1,8 @@
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
+import { get, store } from "./(tabs)/index";
 import { Title } from "./custom";
-import { get, store } from "./index";
 
 interface StopwatchProps {
   time: number,
