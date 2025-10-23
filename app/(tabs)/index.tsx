@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { Title } from '../custom';
 
 export async function store(key: string, value: string) {
@@ -10,19 +10,6 @@ export async function store(key: string, value: string) {
 export async function get(key: string) {
   const res = await AsyncStorage.getItem(key);
   return res;
-}
-
-function Tutorial() {
-  const done = async () => {
-    store("tutorial", "true");
-    router.replace("/");
-  };
-  return (
-      <View>
-        <Text>Tutorial Text</Text>
-        <Button title='Finish' onPress={done}/>
-      </View>
-  );
 }
 
 export default function Index() {
@@ -54,9 +41,7 @@ export default function Index() {
   //   AsyncStorage.clear()
   // });
   if (showTutorial) {
-    return (
-      <Tutorial />
-    );
+    router.replace("/tutorial");
   } else {
     return (
       <View style={{

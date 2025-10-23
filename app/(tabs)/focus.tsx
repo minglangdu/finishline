@@ -38,6 +38,8 @@ export default function Focus() {
       
       <DataInput data={d} value={id} onChangeText={setId}/>
       <br />
+      
+      <br />
       <Button title="Start" onPress={begin} />
     </View>
   );

@@ -70,3 +70,11 @@ export function DataInput ({data, value, onChangeText}:InputProps) {
         />
     )
 }
+
+interface StepProps {
+    
+}
+
+export function StepInput ({}:StepProps) {
+
+}
