@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { Button, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { AutocompleteInput } from "react-native-autocomplete-input"
 
 interface Props {
@@ -71,10 +71,46 @@ export function DataInput ({data, value, onChangeText}:InputProps) {
     )
 }
 
-interface StepProps {
-    
+export interface StepObjProps {
+    title: string
 }
 
-export function StepInput ({}:StepProps) {
+interface StepProps {
+    steps: StepObjProps[],
+    changeSteps: React.Dispatch<React.SetStateAction<StepObjProps[]>>,
 
+}
+
+export function StepInput ({steps, changeSteps}:StepProps) {
+    const [newStep, setNewStep] = useState("");
+    const addStep = () => {
+        let next = steps; 
+        steps.push({
+            title: newStep
+        });
+        changeSteps(next);
+        setNewStep(""); // to refresh page
+    }
+    return (
+        <>
+            <Text>Input Steps:</Text>
+            <Text>Length: {steps.length}</Text>
+            {steps.map((step, index) => (
+                <>
+                {/* key used to update the loop, nothing else */}
+                <View style={index % 2 === 0 ? { alignItems: "flex-start" } : { alignItems: "flex-end" }} key={newStep}>  
+                    <Text>{ step.title }</Text>
+                </View>
+                </>
+            ))}
+            <View style={steps.length % 2 === 0 ? { alignItems: "flex-start" } : { alignItems: "flex-end" }} >
+                <TextInput 
+                    value={newStep}
+                    onChangeText={setNewStep}
+                    style={{borderWidth: 3}}
+                />
+                <Button title='Add Step' onPress={addStep}/>
+            </View>
+        </>
+    );
 }

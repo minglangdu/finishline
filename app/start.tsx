@@ -75,6 +75,7 @@ export default function Start() {
       <View>
         <Text>Focus</Text>
         <Title>Task Name: { args.id }</Title>
+        <Text>JSON-ified steps: { args.steps }</Text>
       </View>
     );
   }

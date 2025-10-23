@@ -1,7 +1,7 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
-import { DataInput, Title } from "../custom";
+import { DataInput, StepInput, StepObjProps, Title } from "../custom";
 
 interface Task {
   title: string
@@ -9,10 +9,13 @@ interface Task {
 
 export default function Focus() {
   const [id, setId] = useState("");
+  const [steps, changeSteps] = useState<StepObjProps[]>([]);
   const begin = () => {
+    const strsteps = JSON.stringify(steps);
+    console.log(strsteps)
     router.navigate({
       pathname: "/start",
-      params: { type: "focus", id: id }
+      params: { type: "focus", id: id, steps:strsteps }
     });
   };
   const d:string[] = ["Task 1", "Task 2", "Task A", "aaaa"];
@@ -38,7 +41,7 @@ export default function Focus() {
       
       <DataInput data={d} value={id} onChangeText={setId}/>
       <br />
-      
+      <StepInput steps={steps} changeSteps={changeSteps}/>
       <br />
       <Button title="Start" onPress={begin} />
     </View>
