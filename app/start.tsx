@@ -1,6 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text, View } from "react-native";
 import { get, store } from "./(tabs)/index";
 import { StepObjProps, Title } from "./custom";
 
@@ -81,7 +81,7 @@ export default function Start() {
       router.replace("/(tabs)/focus");
     }
     return (
-      <View>
+      <ScrollView>
         <Text>Focus</Text>
         <Title>Task Name: { args.id }</Title>
         {csteps.map((curstep:StepObjProps, index:number) => (
@@ -96,7 +96,7 @@ export default function Start() {
         <Text>Congratulations! You finished "{ args.id }"!</Text>
         </> : <></>}
         <Button title="Finish Task" onPress={finishTask}/>
-      </View>
+      </ScrollView>
     );
   }
 }

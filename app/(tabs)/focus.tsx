@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, ScrollView, Text } from "react-native";
 import { get } from ".";
 import { DataInput, StepInput, StepObjProps, Title } from "../custom";
 
@@ -37,9 +37,8 @@ export default function Focus() {
       });
     }
   };
-  const [suggestions, setSuggestions] = useState([""]);
   return (
-    <View
+    <ScrollView
       style={{
         flex: 1,
         padding: 16
@@ -53,6 +52,6 @@ export default function Focus() {
       <StepInput steps={steps} changeSteps={changeSteps}/>
       <br />
       <Button title="Start" onPress={begin} />
-    </View>
+    </ScrollView>
   );
 }
