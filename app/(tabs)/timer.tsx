@@ -1,10 +1,21 @@
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
+import { get } from ".";
 import { DataInput, Title } from "../custom";
 
 export default function Timer() {
   const [id, setId] = useState("");
+  const [data, setData] = useState<string[]>([]);
+  useEffect(() => {
+    get("times").then(data => {
+      let next = {"Unnamed Task":1e9};
+      if (data != null) {
+        next = JSON.parse(data);
+      }
+      setData(Object.keys(next));
+    });
+  }, []);
   const begin = () => {
     if (id !== '') {
       router.navigate({
@@ -13,7 +24,6 @@ export default function Timer() {
       });
     }
   };
-  const data = ["aaa", "bbb", "ccc"];
   return (
     <View
       style={{
@@ -23,17 +33,6 @@ export default function Timer() {
     >
       <Title>Sprint Mode</Title><br />
       <Text style={{ fontWeight:"bold" }}>Enter task name below</Text>
-      {/* <TextInput
-        placeholder="Task Name"
-        value={id}
-        onChangeText={text => {
-          setId(text);
-        }}
-        style={{
-          borderWidth: 1,
-          borderRadius: 3
-        }}
-      /> */}
       <DataInput data={data} value={id} onChangeText={setId}/>
       <br />
       <Button title="Start" onPress={begin} />

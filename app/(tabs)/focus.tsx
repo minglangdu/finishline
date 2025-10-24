@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, Text, View } from "react-native";
+import { get } from ".";
 import { DataInput, StepInput, StepObjProps, Title } from "../custom";
 
 interface Task {
@@ -10,25 +11,33 @@ interface Task {
 export default function Focus() {
   const [id, setId] = useState("");
   const [steps, changeSteps] = useState<StepObjProps[]>([]);
+  const [data, setData] = useState<string[]>([]);
+    useEffect(() => {
+      get("hikes").then(data => {
+        let next = {"Unnamed Task":1e9};
+        if (data != null) {
+          next = JSON.parse(data);
+        }
+        setData(Object.keys(next));
+      });
+    }, []);
   const begin = () => {
     const strsteps = JSON.stringify(steps);
-    console.log(strsteps)
-    router.navigate({
-      pathname: "/start",
-      params: { type: "focus", id: id, steps:strsteps }
-    });
-  };
-  const d:string[] = ["Task 1", "Task 2", "Task A", "aaaa"];
-  const [suggestions, setSuggestions] = useState([""]);
-  useEffect(() => {
-    let cur:string[] = [];
-    for (const s of d) {
-      if (s.includes(id) && s !== id) {
-        cur.push(s);
-      }
+    if (JSON.parse(strsteps).length > 0) {
+      console.log(strsteps)
+      router.navigate({
+        pathname: "/start",
+        params: { type: "focus", id: id, steps:strsteps }
+      });
+    } else {
+      let cur:StepObjProps[] = [{ title: id }];
+      router.navigate({
+        pathname: "/start",
+        params: { type: "focus", id: id, steps: JSON.stringify(cur) }
+      });
     }
-    setSuggestions(cur);
-  }, [id]);
+  };
+  const [suggestions, setSuggestions] = useState([""]);
   return (
     <View
       style={{
@@ -39,7 +48,7 @@ export default function Focus() {
       <Title>Hike Mode</Title> <br />
       <Text style={{ fontWeight: "bold" }}>Enter task name below</Text>
       
-      <DataInput data={d} value={id} onChangeText={setId}/>
+      <DataInput data={data} value={id} onChangeText={setId}/>
       <br />
       <StepInput steps={steps} changeSteps={changeSteps}/>
       <br />
