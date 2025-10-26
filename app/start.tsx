@@ -2,14 +2,14 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 import { get, store } from "./(tabs)/index";
-import { StepObjProps, Title } from "./custom";
+import { StepObjProps, TimeDisplay, Title } from "./custom";
 
 interface SprintObj {
   [key:string]:number
 }
 
 interface HikeObj {
-  [key:string]:number
+  [key:string]:string[]
 }
 
 export default function Start() {
@@ -52,9 +52,14 @@ export default function Start() {
           padding: 16
         }}
       >
-        <Text>Timer</Text>
-        <Title>Task Name: { args.id }</Title>
-        <Text>{secs}</Text>
+        <Title>Sprint</Title>
+        <Text><strong>Task Name</strong>: { args.id }</Text>
+        <View style={{
+          margin: 5, 
+          padding: 10
+        }}>
+          <TimeDisplay time={secs} />
+        </View>
         <Button onPress={() => {
           setState(false);
         }} title='Stop' disabled={!state}/>

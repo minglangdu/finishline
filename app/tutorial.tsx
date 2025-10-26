@@ -3,6 +3,23 @@ import { Button, Text, View } from "react-native";
 import { store } from "./(tabs)/index";
 
 export default function Tutorial() {
+  const items = [
+    {
+      id: 'welcome',
+    },
+    {
+      id: 'sprint',
+    },
+    {
+      id: 'hike',
+    },
+    {
+      id: 'compare',
+    },
+    {
+      id: 'goodbye',
+    }
+  ];
   const done = async () => {
     store("tutorial", "true");
     router.replace("/(tabs)/timer");
@@ -15,7 +32,7 @@ export default function Tutorial() {
       }}
       >
         <Text>Tutorial Text</Text>
-        <Button title='Finish' onPress={done}/>
+        <Button title='Skip' onPress={done}/>
       </View>
   );
 }

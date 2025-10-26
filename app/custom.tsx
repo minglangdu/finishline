@@ -114,3 +114,23 @@ export function StepInput ({steps, changeSteps}:StepProps) {
         </>
     );
 }
+
+export function TimeDisplay({time}:{time: number}) {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor(time / 60) % 60;
+    const seconds = time % 3600 % 60;
+    return (<View style={{padding: 5, flexDirection:'row', borderWidth: 2, borderRadius: 5, backgroundColor: "black"}}>
+        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
+        <Text style={{color:"white"}}>{hours}</Text>
+        <Text style={{fontSize:10, color:"white"}}>hours</Text>
+        </View>
+        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
+        <Text style={{color:"white"}}>{minutes}</Text>
+        <Text style={{fontSize:10, color:"white"}}>minutes</Text>
+        </View>
+        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
+        <Text style={{color:"white"}}>{seconds}</Text>
+        <Text style={{fontSize:10, color:"white"}}>seconds</Text>
+        </View>
+    </View>);
+}

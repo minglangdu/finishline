@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, ScrollView, Text, View } from 'react-native';
-import { Title } from '../custom';
+import { TimeDisplay, Title } from '../custom';
 
 export async function store(key: string, value: string) {
   await AsyncStorage.setItem(key, value);
@@ -18,9 +18,6 @@ interface SprintProps {
 }
 
 function Sprint({name, time}:SprintProps) {
-  const hours = Math.floor(time / 3600);
-  const minutes = Math.floor(time / 60) % 60;
-  const seconds = time % 3600;
   return (
     <View style={{
       flexDirection: "row",
@@ -32,19 +29,8 @@ function Sprint({name, time}:SprintProps) {
       backgroundColor: "lightgray"
     }}>
       <View style={{flex: 2, alignSelf: "center"}}><strong style={{fontFamily:"monospace"}}>{name}</strong></View>
-      <View style={{flex: 5, padding: 5, flexDirection:'row', borderWidth: 2, borderRadius: 5, backgroundColor: "black"}}>
-        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
-          <Text style={{color:"white"}}>{hours}</Text>
-          <Text style={{fontSize:10, color:"white"}}>hours</Text>
-        </View>
-        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
-          <Text style={{color:"white"}}>{minutes}</Text>
-          <Text style={{fontSize:10, color:"white"}}>minutes</Text>
-        </View>
-        <View style={{flex: 1, flexDirection: "column", alignItems:"center"}}>
-          <Text style={{color:"white"}}>{seconds}</Text>
-          <Text style={{fontSize:10, color:"white"}}>seconds</Text>
-        </View>
+      <View style={{flex: 5}}>
+        <TimeDisplay time={time} />
       </View>
     </View>
   );
@@ -97,16 +83,17 @@ export default function Index() {
         padding: 16
       }}>
         <Title>Finish Line</Title>
-        <Text></Text>
+        <Text>Here you can find your times to complete tasks. </Text>
         <br />
         <Button title="Refresh" onPress={() => {window.location.reload()}} />
+        <Button title="Clear Data" onPress={async () => {await AsyncStorage.clear();}} color={"red"}/>
         <br />
         <Title>Times</Title> <br />
-        <Text style={{fontWeight:"bold", fontSize:20}}>Fastest Sprints</Text>
+        <Text style={{fontWeight:"bold", fontSize:20}}>Latest Sprints</Text>
         {Object.keys(times).length > 0 ?
           <ul>{Array.from(Object.entries(times)).map(([key, value]: [string, any]) => {
             // return <li key={key} style={{fontFamily: "sans-serif"}}> <strong>{key}</strong>: {value}</li>
-            return (<Sprint key={key} name={key} time={value} />);
+            return (<Sprint key={key} name={key} time={value}/>);
           })}</ul>
           : <Text>No times yet. Start a sprint to fill out this table! </Text>
         }
