@@ -1,7 +1,8 @@
+import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Button, ScrollView, Text, View } from 'react-native';
+import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { TimeDisplay, Title } from '../custom';
 
 export async function store(key: string, value: string) {
@@ -32,6 +33,41 @@ function Sprint({name, time}:SprintProps) {
       <View style={{flex: 5}}>
         <TimeDisplay time={time} />
       </View>
+      <View style={{flexDirection: "column", alignContent: "center"}}>
+        <TouchableOpacity style={{padding: 3, borderWidth: 2, borderRadius: 5, margin: 2}}
+        onPress={() => {
+          router.navigate({
+            pathname: "/graph",
+            params: { id: name }
+          });
+        }}>
+          <Ionicons name="stats-chart" size={30} color="blue" />
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+interface HikeProps {
+  name: string,
+  value: {title: string}[]
+}
+
+function Hike({name, value}:HikeProps) {
+  console.log(name);
+  console.log(value);
+  return (
+    <View style={{
+      flexDirection: "column"
+    }}>
+      <View style={{flex: 3}}>
+        <Text>{name}</Text>
+      </View>
+      {value.map((obj:{title:string}, index: number) => {
+        return (<View style={{flex:2}} key={index}>
+          <Text>{index + 1}. {obj.title}</Text>
+        </View>);
+      })}
     </View>
   );
 }
@@ -100,7 +136,7 @@ export default function Index() {
         <Text style={{fontWeight:"bold", fontSize:20}}>Last Hikes</Text>
         {Object.keys(hikes).length > 0 ?
           <ul>{Array.from(Object.entries(hikes)).map(([key, value]: [string, any]) => {
-            return <li key={key} style={{fontFamily: "sans-serif"}}> <strong>{key}</strong>: {value} steps completed</li>
+            return (<Hike name={key} key={key} value={value}/>);
           })}</ul>
           : <Text>No data yet. Start a hike to fill out this table! </Text>
         }

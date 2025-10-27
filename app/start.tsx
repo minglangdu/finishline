@@ -8,6 +8,10 @@ interface SprintObj {
   [key:string]:number
 }
 
+export interface SprintHistory {
+  [key:string]: {time: number, date: string}[]
+}
+
 interface HikeObj {
   [key:string]:string[]
 }
@@ -32,9 +36,22 @@ export default function Start() {
           next[args.id] = Math.min(secs, next[args.id]);
           store("times", JSON.stringify(next));
         });
-      } else if (!state && args.type == "focus") {
-        // placeholder
-      }
+        get("sprinthistory").then(data => {
+          let next:SprintHistory = {};
+          if (data != null) {
+            next = JSON.parse(data);
+          }
+          args.id = (Array.isArray(args.id)) ? args.id.join("") : args.id;
+          const date:Date = new Date();
+          const ds:string = date.toISOString();
+          if (args.id in next) {
+            next[args.id].push({time:secs, date: ds});
+          } else {
+            next[args.id] = [{time:secs, date: ds}];
+          }
+          store("sprinthistory", JSON.stringify(next));
+        });
+      } 
     }, [state]);
     useEffect(() => {
       if (!state) {
@@ -80,8 +97,14 @@ export default function Start() {
         if (data != null) {
           next = JSON.parse(data);
         }
-        next[(Array.isArray(args.id) ? args.id[0] : args.id)] = cur;
+        const finished:string[] = [];
+        for (let i = 0; i < cur; i ++) {
+          finished.push(csteps[i]);
+        }
+        console.log(finished);
+        next[(Array.isArray(args.id) ? args.id[0] : args.id)] = finished;
         store("hikes", JSON.stringify(next));
+        console.log(next);
       });
       router.replace("/(tabs)/focus");
     }
