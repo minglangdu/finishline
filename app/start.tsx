@@ -12,8 +12,8 @@ export interface SprintHistory {
   [key:string]: {time: number, date: string}[]
 }
 
-interface HikeObj {
-  [key:string]:string[]
+export interface HikeObj {
+  [key:string]:{completed: string[], date: string}[]
 }
 
 export default function Start() {
@@ -101,8 +101,15 @@ export default function Start() {
         for (let i = 0; i < cur; i ++) {
           finished.push(csteps[i]);
         }
-        console.log(finished);
-        next[(Array.isArray(args.id) ? args.id[0] : args.id)] = finished;
+        // console.log(finished);
+        const date = new Date();
+        const datestring = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate()}`
+        const nargs = (Array.isArray(args.id) ? args.id[0] : args.id);
+        if (nargs in Object.keys(next)) {
+          next[nargs].push({completed: finished, date: datestring});
+        } else {
+          next[nargs] = [{completed: finished, date: datestring}];
+        }
         store("hikes", JSON.stringify(next));
         console.log(next);
       });

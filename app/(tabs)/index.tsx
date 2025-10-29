@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Button, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { TimeDisplay, Title } from '../custom';
+import { HikeObj } from "../start";
 
 export async function store(key: string, value: string) {
   await AsyncStorage.setItem(key, value);
@@ -50,7 +51,7 @@ function Sprint({name, time}:SprintProps) {
 
 interface HikeProps {
   name: string,
-  value: {title: string}[]
+  value: HikeObj
 }
 
 function Hike({name, value}:HikeProps) {
@@ -58,16 +59,28 @@ function Hike({name, value}:HikeProps) {
   console.log(value);
   return (
     <View style={{
-      flexDirection: "column"
+      flexDirection: "row",
+      padding: 5,
+      margin: 3,
+      // width: window.screen.width * 4/5,
+      borderWidth: 2, 
+      borderRadius: 5, 
+      backgroundColor: "lightgray"
     }}>
-      <View style={{flex: 3}}>
-        <Text>{name}</Text>
+      <View style={{flex: 3, backgroundColor: "gray", alignContent: "center"}}>
+        <Text style={{alignSelf:"center"}}>{name}</Text>
       </View>
-      {value.map((obj:{title:string}, index: number) => {
-        return (<View style={{flex:2}} key={index}>
-          <Text>{index + 1}. {obj.title}</Text>
-        </View>);
-      })}
+      <View>
+        <TouchableOpacity style={{padding: 3, borderWidth: 2, borderRadius: 5, margin: 2}}
+        onPress={() => {
+          router.navigate({
+            pathname: "/heatmap",
+            params: { id: name }
+          });
+        }}>
+          <Ionicons name="stats-chart" size={30} color="blue" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

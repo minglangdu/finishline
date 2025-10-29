@@ -7,5 +7,6 @@ export default function RootLayout() {
     <Stack.Screen name="start" options={{ headerShown: false }} />
     <Stack.Screen name="tutorial" options={{ headerShown: false }} />
     <Stack.Screen name="graph" options={{ headerShown: false }} />
+    <Stack.Screen name="heatmap" options={{ headerShown: false }} />
   </Stack>;
 }
